@@ -104,6 +104,12 @@
               "LogGroupName": "/aws/lambda/auth-server-dev-getAccessToken"
             }
           },
+          "GetCalendarEventsLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/auth-server-dev-getCalendarEvents"
+            }
+          },
           "IamRoleLambdaExecution": {
             "Type": "AWS::IAM::Role",
             "Properties": {
@@ -188,7 +194,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/auth-server/dev/1622215342164-2021-05-28T15:22:22.164Z/auth-server.zip"
+                "S3Key": "serverless/auth-server/dev/1622288121553-2021-05-29T11:35:21.553Z/auth-server.zip"
               },
               "Handler": "handler.getAuthURL",
               "Runtime": "nodejs12.x",
@@ -221,7 +227,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/auth-server/dev/1622215342164-2021-05-28T15:22:22.164Z/auth-server.zip"
+                "S3Key": "serverless/auth-server/dev/1622288121553-2021-05-29T11:35:21.553Z/auth-server.zip"
               },
               "Handler": "handler.getAccessToken",
               "Runtime": "nodejs12.x",
@@ -247,24 +253,67 @@
               "GetAccessTokenLogGroup"
             ]
           },
-          "GetAuthURLLambdaVersion2WJz7wUSpmhlqoVGwpuuYHdQsdVMfPXzzgCjNNPlQg": {
+          "GetCalendarEventsLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/auth-server/dev/1622288121553-2021-05-29T11:35:21.553Z/auth-server.zip"
+              },
+              "Handler": "handler.getCalendarEvents",
+              "Runtime": "nodejs12.x",
+              "FunctionName": "auth-server-dev-getCalendarEvents",
+              "MemorySize": 1024,
+              "Timeout": 60,
+              "Environment": {
+                "Variables": {
+                  "CLIENT_ID": "511271470159-lsuug1hia532ff2po3ecfqsjfalfhnbi.apps.googleusercontent.com",
+                  "CLIENT_SECRET": "kDuioopRatrQ1b9urCew1Ng7",
+                  "PROJECT_ID": "meet-app-315105",
+                  "CALENDAR_ID": "fullstackwebdev@careerfoundry.com"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "GetCalendarEventsLogGroup"
+            ]
+          },
+          "GetAuthURLLambdaVersionIflJgXzofXMjYDloeg6FSwV7m2Xnth7IN4iyRtVvyQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetAuthURLLambdaFunction"
               },
-              "CodeSha256": "C3LiYTeXtxTalI0NS3jFuIA8r+ZF9PHiZRllCdYplRU="
+              "CodeSha256": "Gd9TjOmF6yGX8JeutIj+CV/01Y8R+wq52O2XC+F/zEo="
             }
           },
-          "GetAccessTokenLambdaVersionmb5SlTtCVJ7aXn1LZovLa2ebUj1hvbSOuF4YXEclhs": {
+          "GetAccessTokenLambdaVersion0XWEO5QaJ2ap9TmKuQ9GiOudXRqw40gP3pRTGHbcs": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetAccessTokenLambdaFunction"
               },
-              "CodeSha256": "C3LiYTeXtxTalI0NS3jFuIA8r+ZF9PHiZRllCdYplRU="
+              "CodeSha256": "Gd9TjOmF6yGX8JeutIj+CV/01Y8R+wq52O2XC+F/zEo="
+            }
+          },
+          "GetCalendarEventsLambdaVersionEuGwGl98b4JIgvzFHw3TirsI4XyA2pKz6Jv2103mvUI": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetCalendarEventsLambdaFunction"
+              },
+              "CodeSha256": "Gd9TjOmF6yGX8JeutIj+CV/01Y8R+wq52O2XC+F/zEo="
             }
           },
           "ApiGatewayRestApi": {
@@ -325,6 +374,30 @@
                 "Ref": "ApiGatewayResourceApiToken"
               },
               "PathPart": "{code}",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiGetDashevents": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApi"
+              },
+              "PathPart": "get-events",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiGetDasheventsAccesstokenVar": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApiGetDashevents"
+              },
+              "PathPart": "{access_token}",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -416,7 +489,50 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1622215330320": {
+          "ApiGatewayMethodApiGetDasheventsAccesstokenVarGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceApiGetDasheventsAccesstokenVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "GetCalendarEventsLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayDeployment1622288114799": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -426,7 +542,8 @@
             },
             "DependsOn": [
               "ApiGatewayMethodApiGetDashauthDashurlGet",
-              "ApiGatewayMethodApiTokenCodeVarGet"
+              "ApiGatewayMethodApiTokenCodeVarGet",
+              "ApiGatewayMethodApiGetDasheventsAccesstokenVarGet"
             ]
           },
           "GetAuthURLLambdaPermissionApiGateway": {
@@ -502,6 +619,43 @@
                 ]
               }
             }
+          },
+          "GetCalendarEventsLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "GetCalendarEventsLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
           }
         },
         "Outputs": {
@@ -516,7 +670,7 @@
           "GetAuthURLLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetAuthURLLambdaVersion2WJz7wUSpmhlqoVGwpuuYHdQsdVMfPXzzgCjNNPlQg"
+              "Ref": "GetAuthURLLambdaVersionIflJgXzofXMjYDloeg6FSwV7m2Xnth7IN4iyRtVvyQ"
             },
             "Export": {
               "Name": "sls-auth-server-dev-GetAuthURLLambdaFunctionQualifiedArn"
@@ -525,10 +679,19 @@
           "GetAccessTokenLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetAccessTokenLambdaVersionmb5SlTtCVJ7aXn1LZovLa2ebUj1hvbSOuF4YXEclhs"
+              "Ref": "GetAccessTokenLambdaVersion0XWEO5QaJ2ap9TmKuQ9GiOudXRqw40gP3pRTGHbcs"
             },
             "Export": {
               "Name": "sls-auth-server-dev-GetAccessTokenLambdaFunctionQualifiedArn"
+            }
+          },
+          "GetCalendarEventsLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GetCalendarEventsLambdaVersionEuGwGl98b4JIgvzFHw3TirsI4XyA2pKz6Jv2103mvUI"
+            },
+            "Export": {
+              "Name": "sls-auth-server-dev-GetCalendarEventsLambdaFunctionQualifiedArn"
             }
           },
           "ServiceEndpoint": {
@@ -662,7 +825,7 @@
         "timeout": 60,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "GetAuthURLLambdaVersion2WJz7wUSpmhlqoVGwpuuYHdQsdVMfPXzzgCjNNPlQg"
+        "versionLogicalId": "GetAuthURLLambdaVersionIflJgXzofXMjYDloeg6FSwV7m2Xnth7IN4iyRtVvyQ"
       },
       "getAccessToken": {
         "handler": "handler.getAccessToken",
@@ -681,7 +844,26 @@
         "timeout": 60,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "GetAccessTokenLambdaVersionmb5SlTtCVJ7aXn1LZovLa2ebUj1hvbSOuF4YXEclhs"
+        "versionLogicalId": "GetAccessTokenLambdaVersion0XWEO5QaJ2ap9TmKuQ9GiOudXRqw40gP3pRTGHbcs"
+      },
+      "getCalendarEvents": {
+        "handler": "handler.getCalendarEvents",
+        "events": [
+          {
+            "http": {
+              "path": "api/get-events/{access_token}",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "auth-server-dev-getCalendarEvents",
+        "package": {},
+        "memory": 1024,
+        "timeout": 60,
+        "runtime": "nodejs12.x",
+        "vpc": {},
+        "versionLogicalId": "GetCalendarEventsLambdaVersionEuGwGl98b4JIgvzFHw3TirsI4XyA2pKz6Jv2103mvUI"
       }
     },
     "configValidationMode": "warn",
@@ -703,7 +885,7 @@
     "artifact": "C:\\Users\\camel\\Documents\\GitHub\\meet\\auth-server\\.serverless\\auth-server.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/auth-server/dev/1622215342164-2021-05-28T15:22:22.164Z",
+    "artifactDirectoryName": "serverless/auth-server/dev/1622288121553-2021-05-29T11:35:21.553Z",
     "artifact": "auth-server.zip"
   }
 }
