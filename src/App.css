@@ -1,12 +1,26 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:500);
+@import url(https://fonts.googleapis.com/css2?family=Baloo+Tammudu);
 .App {
   text-align: center;
   padding: 2% 5%;
+  background-color: #EFEFF1;
+  font-family: 'Oranienbaum', serif;
 }
 
 .App * {
   box-sizing: border-box;
 }
+
+.show-hide-btn {
+  font-size: medium;
+  width: 10%;
+}
+
+.selectNumber {
+  font-size: medium;
+  padding: 4px;
+  font-family: 'Oranienbaum', serif;
+}
+
 
 ul {
   padding: 0;
@@ -81,7 +95,8 @@ input[type="number"] {
   margin-bottom: 10px;
   text-align: left;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: #C9CBE0;
+  border-radius: 10px;
   position: relative;
 }
 

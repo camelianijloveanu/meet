@@ -34,9 +34,11 @@ class CitySearch extends Component {
         type="text"
         className="city"
         value={this.state.query}
+        placeholder="Search city"
         onChange={this.handleInputChanged}
         onFocus={() => { this.setState({ showSuggestions: true }) }}
       />
+      <div className="selectNumber">Select number of events</div>
     <ul className="suggestions" style={this.state.showSuggestions ? {}: { display: 'none' }}>
     {this.state.suggestions.map((suggestion) => (
         <li
