@@ -45,6 +45,25 @@ describe('<App /> integration', () => {
     AppWrapper.unmount();
   });
 
+  test('App passes "eventCount" state as a prop to NumberOfEvents', () => {
+    const AppWrapper = mount(<App />);
+    const AppEventCountState = AppWrapper.state('eventCount');
+    expect(AppWrapper.find(NumberOfEvents).props().locations).not.toEqual(
+      AppEventCountState
+    );
+    AppWrapper.unmount();
+  });
+
+  test('get list of all events when user selects "See all"', async () => {
+    const AppWrapper = mount(<App />);
+    const suggestionItems = AppWrapper.find(CitySearch).find('.suggestions li');
+    await suggestionItems.at(suggestionItems.length - 1).simulate('click');
+    const allEvents = await getEvents();
+    expect(AppWrapper.state('events')).toEqual(allEvents);
+    AppWrapper.unmount();
+  });
+
+
   test('get list of events matching the city selected by the user', async () => {
     const AppWrapper = mount(<App />);
     const CitySearchWrapper = AppWrapper.find(CitySearch);
@@ -60,12 +79,17 @@ describe('<App /> integration', () => {
     AppWrapper.unmount();
   });
 
-  test('get list of all events when user selects "See all cities"', async () => {
+  test('get list on change number of events by user', async () => {
     const AppWrapper = mount(<App />);
-    const suggestionItems = AppWrapper.find(CitySearch).find('.suggestions li');
-    await suggestionItems.at(suggestionItems.length - 1).simulate('click');
-    const allEvents = await getEvents();
-    expect(AppWrapper.state('events')).toEqual(allEvents);
+    const NumberOfEventsWrapper = AppWrapper.find(NumberOfEvents);
+    const locations = extractLocations(mockData);
+    AppWrapper.instance().updateEvents = jest.fn();
+    AppWrapper.instance().forceUpdate();
+    NumberOfEventsWrapper.setState({ events: locations, eventCount: 5 });
+    NumberOfEventsWrapper.find('.event-number-input').simulate('change');
+    expect(NumberOfEventsWrapper.state('eventCount')).toEqual('5');
+    expect(AppWrapper.instance().updateEvents).toHaveBeenCalledWith('', '5');
     AppWrapper.unmount();
   });
+  
 });
