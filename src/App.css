@@ -1,9 +1,12 @@
 @import url(https://fonts.googleapis.com/css2?family=Baloo+Tammudu);
 .App {
   text-align: center;
+  position: fixed;
   padding: 2% 5%;
   background-color: #EFEFF1;
   font-family: 'Oranienbaum', serif;
+  height: 100%;
+  width: 100%;
 }
 
 .App * {
