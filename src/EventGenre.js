@@ -6,7 +6,7 @@ const EventGenre = ({ events }) => {
 useEffect(() => { setData(() => getData()); }, [events]);
 const [data, setData] = useState([]);
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = ['#03254c', '#1167b1', '#187bcd', '#2a9df4'];
 
 const getData = () => {
     
