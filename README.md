@@ -2,7 +2,7 @@
 #### Serverless, progressive web application (PWA) with React using a test-driven
 #### development (TDD) technique. The application uses the Google Calendar API to fetch
 #### upcoming events
-## Key feature
+## Key features
 #### -filter events by city
 #### -show and hide event's details
 #### -specify numbers of events to be displayed
@@ -10,7 +10,14 @@
 #### -add app shortcut to the screen
 #### -view chart of upcoming events in a certain city
 
-# FEATURE 2: Show/hide an event’s details
+## Tools
+#### -React Framework
+#### -Google Calendar API
+#### -OAuth2 authentication
+#### -AWS Lambda
+#### -Recharts (data visualisation)
+
+### FEATURE 2: Show/hide an event’s details
 USER STORY: 
 As a user
 I should be able to click on an event
@@ -29,7 +36,7 @@ When the user clicks on said event
 Then the user can hide information about the event
 
 
-# FEATURE 3: Specify number of events
+### FEATURE 3: Specify number of events
 USER STORY:
 As a user,
 I should be able to specify a number of events
@@ -44,7 +51,7 @@ Given the user wishes to see a specific number of events
 When the user inputs the desired number
 Then that exact amount of events will be displayed.
 
-# FEATURE 4: Use the app when offline
+### FEATURE 4: Use the app when offline
 USER STORY:
 As a user,
 I should be able to use the app while offline
@@ -60,7 +67,7 @@ When the user changes settings
 Then message error should be displayed.
 
 
-# FEATURE 5: Data visualization
+### FEATURE 5: Data visualization
 •	Scenario 1: Show a chart with the number of upcoming events in each city
 USER STORY:
 As a user,
@@ -71,3 +78,25 @@ So I can see what happens in each place.
 Given the user wants to see events in many cities
 When the user clicks on chart
 Then a chart with events in each city should be displayed.
+
+### Getting Started
+##### Requirements:
+##### - Node.js
+``` 
+npm install --global expo-cli
+```
+### Setup
+##### Start by cloning this repository and installing dependencies
+``` 
+npm install
+```
+### Running app
+##### To get the app running run the following command:
+``` 
+npm run start
+```
+
+### Deployment
+``` 
+npm run deploy
+```
