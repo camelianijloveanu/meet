@@ -82,9 +82,6 @@ Then a chart with events in each city should be displayed.
 ### Getting Started
 ##### Requirements:
 ##### - Node.js
-``` 
-npm install --global expo-cli
-```
 ### Setup
 ##### Start by cloning this repository and installing dependencies
 ``` 
